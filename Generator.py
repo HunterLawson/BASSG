@@ -3,7 +3,7 @@ from glob import glob
 from jinja2 import Environment, FileSystemLoader
 from distutils.dir_util import copy_tree
 from markdown import markdown
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup as bs
 from json import load
 
 class Generator:
@@ -68,7 +68,27 @@ class Generator:
                 create_file = self.__FOLDER_DEFAULTS['output_folder'] + '\\' + folder_struct + '\\' + filename
             else:
                 create_file = self.__FOLDER_DEFAULTS['output_folder'] + '\\' + filename
-                            
+            
+            if beautify:
+                soup = bs(rendered_template, features='html.parser')
+                rendered_template = soup.prettify()
+                # Beautify only adds 1 space by default, add an additional
+                # for 2 space tabs
+                new_temp = ''
+                for line in rendered_template.split('\n'):
+                    space_count = 0
+                    for char in line:
+                        if char != ' ':
+                            break
+                        space_count += 1
+                    spacing = ''
+                    for i in range(space_count):
+                        spacing += ' '
+                    line = spacing + line
+                    new_temp += line + '\n'
+                new_temp = new_temp[:-1]
+                rendered_template = new_temp
+            
             with open(create_file, mode='w') as file:
                 file.write(rendered_template)
                 
@@ -96,7 +116,7 @@ class Generator:
     def __get_config(self, filename):
         filename = filename.split('\\')[-1].split('.')[0]
         configFile = glob(self.__FOLDER_DEFAULTS['config_folder'] + '\\' + filename + '*.json')
-        if configFile == None:
+        if configFile == []:
             return None
         if len(configFile) > 0:
             configFile = configFile[0]
