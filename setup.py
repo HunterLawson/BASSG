@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='bassg',
-    version='0.0.5',
+    version='1.1.0',
     license='MIT',
     author='Hunter Lawson',
     author_email='hawson7@gmail.com',
