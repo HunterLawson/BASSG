@@ -1,5 +1,5 @@
 import click
-from Generator import Generator
+from .Generator import Generator
 
 @click.group()
 def cli():

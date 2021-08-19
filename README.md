@@ -1,2 +1,2 @@
 # BASSG
-BASSG - Basic Agile Static Site Generator
+bassg - Basic Agile Static Site Generator
