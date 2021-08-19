@@ -1,0 +1,4 @@
+click
+markdown
+jinja2
+beautifulsoup4

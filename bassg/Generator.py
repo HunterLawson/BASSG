@@ -57,17 +57,23 @@ class Generator:
         for build_file in build_files:
             filename = build_file.split('\\')[-1] # just the <filename>.html
             template = env.get_template(filename)
-            rendered_template = template.render(content=self.__get_markdown(build_file))
 
             folder_struct = None
+            config_data = None
             if self.__get_config(build_file):
-                folder_struct = self.__get_config(build_file)['folder_struct']
+                try:
+                    folder_struct = self.__get_config(build_file)['folder_struct']
+                except:
+                    pass
+                config_data = self.__get_config(build_file)
             
             if folder_struct:
                 os.makedirs(self.__FOLDER_DEFAULTS['output_folder'] + '\\' + folder_struct, exist_ok=True)
                 create_file = self.__FOLDER_DEFAULTS['output_folder'] + '\\' + folder_struct + '\\' + filename
             else:
                 create_file = self.__FOLDER_DEFAULTS['output_folder'] + '\\' + filename
+            
+            rendered_template = template.render(markdown=self.__get_markdown(build_file), data=config_data)
             
             if beautify:
                 soup = bs(rendered_template, features='html.parser')
