@@ -47,7 +47,7 @@ class Generator:
         
         if ignore_files:
             for file in ignore_files:
-                file = self.__FOLDER_DEFAULTS['build_folder'] + '\\' + file
+                file = os.path.join(self.__FOLDER_DEFAULTS['build_folder'], file)
                 if file in build_files:
                     build_files.remove(file)
                     
@@ -58,6 +58,7 @@ class Generator:
             filename = build_file.split('\\')[-1] # just the <filename>.html
             template = env.get_template(filename)
 
+            # Check and apply the "folder_struct" json option to the file
             folder_struct = None
             config_data = None
             if self.__get_config(build_file):
@@ -68,10 +69,11 @@ class Generator:
                 config_data = self.__get_config(build_file)
             
             if folder_struct:
-                os.makedirs(self.__FOLDER_DEFAULTS['output_folder'] + '\\' + folder_struct, exist_ok=True)
-                create_file = self.__FOLDER_DEFAULTS['output_folder'] + '\\' + folder_struct + '\\' + filename
+                os.makedirs(os.path.join(self.__FOLDER_DEFAULTS['output_folder'],  folder_struct), exist_ok=True)
+                new_file = os.path.join(folder_struct, filename)
+                create_file = os.path.join(self.__FOLDER_DEFAULTS['output_folder'], new_file)
             else:
-                create_file = self.__FOLDER_DEFAULTS['output_folder'] + '\\' + filename
+                create_file = os.path.join(self.__FOLDER_DEFAULTS['output_folder'], filename)
             
             rendered_template = template.render(markdown=self.__get_markdown(build_file), data=config_data)
             
