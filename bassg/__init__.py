@@ -1,1 +1,1 @@
-from . import bassg
+from .main import cli
