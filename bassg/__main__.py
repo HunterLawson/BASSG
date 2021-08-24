@@ -53,3 +53,6 @@ def _check_project_exists(project_name):
                 
     os.chdir('..')
     return True
+
+if __name__ == '__main__':
+    cli()
