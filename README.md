@@ -13,13 +13,21 @@
 ```text
 $ pip install bassg
 ```
+I would recommend installing **BASSG** in a [virtual environment](https://docs.python.org/3/library/venv.html). This allows you to access **BASSG** using the "bassg" entry point:
+```text
+$ bassg --help
+```
+Otherwise, **BASSG** can be accessed with python directly:
+```text
+$ py -m bassg --help
+```
 
 # Usage
 
 ## Create the project directory:
 
 ```text
-$ py -m bassg create <project_name>
+$ bassg create <project_name>
 ```
 This will create the folder structure in the current directory (root):  
 ```
@@ -35,7 +43,7 @@ This will create the folder structure in the current directory (root):
 ## Generating the site:
 
 ```text
-$ py -m bassg generate <project_name>
+$ bassg generate <project_name>
 ```
 This will compile all of the html files in the *build/* directory using Jinja2 and Markdown
 
@@ -69,4 +77,4 @@ For example:
 ```
 All of these variables will be passed into the Jinja2 parser for `file_name.html`.
 
-The special attribute `folder_struct` tells BASSG which folder to place the page in when it generates the site. In this example, the generated `file_name.html` file will be placed in the *site/docs/* folder. This can be used to easily organize the pages of your site.
+The special attribute `folder_struct` tells **BASSG** which folder to place the page in when it generates the site. In this example, the generated `file_name.html` file will be placed in the *site/docs/* folder. This can be used to easily organize the pages of your site.
