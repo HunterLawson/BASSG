@@ -41,8 +41,15 @@ class Generator:
                       beautify=True, 
                       individual_folders=True, 
                       copy_assets=True,
-                      ignore_files=None):
-        
+                      ignore_files=None,
+                      output_dir=''):
+        if output_dir == '':
+            output_folder = self.__FOLDER_DEFAULTS['output_folder']
+        elif os.path.isdir(output_dir):
+            output_folder = output_dir
+        else:
+            raise Exception('Output directory not valid')
+
         build_files = glob(self.__FOLDER_DEFAULTS['build_folder'] + '\\*.html')
         
         if ignore_files:
@@ -69,11 +76,11 @@ class Generator:
                 config_data = self.__get_config(build_file)
             
             if folder_struct:
-                os.makedirs(os.path.join(self.__FOLDER_DEFAULTS['output_folder'],  folder_struct), exist_ok=True)
+                os.makedirs(os.path.join(output_folder,  folder_struct), exist_ok=True)
                 new_file = os.path.join(folder_struct, filename)
-                create_file = os.path.join(self.__FOLDER_DEFAULTS['output_folder'], new_file)
+                create_file = os.path.join(output_folder, new_file)
             else:
-                create_file = os.path.join(self.__FOLDER_DEFAULTS['output_folder'], filename)
+                create_file = os.path.join(output_folder, filename)
             
             rendered_template = template.render(markdown=self.__get_markdown(build_file), data=config_data)
             
@@ -102,7 +109,7 @@ class Generator:
                 
         if copy_assets:
             copy_tree(self.__FOLDER_DEFAULTS['assets_folder'], 
-                      self.__FOLDER_DEFAULTS['output_folder'] + '\\assets\\')
+                      output_folder + '\\assets\\')
 
                                 
     def __get_markdown(self, filename):

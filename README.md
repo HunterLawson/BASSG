@@ -24,6 +24,12 @@ $ py -m bassg --help
 
 # Usage
 
+If you need help with a command, run:
+```text
+$ bassg <command> --help
+```
+to see the help menu for that command.
+
 ## Create the project directory:
 
 ```text
