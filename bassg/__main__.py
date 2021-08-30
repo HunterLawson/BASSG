@@ -18,14 +18,15 @@ def create(project_name):
 @cli.command('generate')
 @click.argument('project_name')
 @click.option('--file', default='', help='Output file location')
-def generate(project_name, file):
+@click.option('--b', default=True, help='Beautify the output HTML')
+def generate(project_name, file, b):
     '''
     Generate the site from the files in the project directory
     '''
     if _check_project_exists(project_name):
         generator = Generator(project_name)
         # Load the config.json file here
-        generator.generate_site(output_dir=file)
+        generator.generate_site(output_dir=file, beautify=b)
     else:
         print(f'Project \"{project_name}\" does not exist in this directory, '
               f'create it with \"bassg create {project_name}\"')

@@ -84,7 +84,7 @@ class Generator:
             
             rendered_template = template.render(markdown=self.__get_markdown(build_file), data=config_data)
             
-            if beautify:
+            if beautify == True:
                 soup = bs(rendered_template, features='html.parser')
                 rendered_template = soup.prettify()
                 # Beautify only adds 1 space by default, add an additional
