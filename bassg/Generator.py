@@ -107,7 +107,7 @@ class Generator:
             with open(create_file, mode='w') as file:
                 file.write(rendered_template)
                 
-        if copy_assets:
+        if copy_assets == True:
             copy_tree(self.__FOLDER_DEFAULTS['assets_folder'], 
                       output_folder + '\\assets\\')
 
