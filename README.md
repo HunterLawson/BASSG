@@ -19,7 +19,7 @@ $ bassg --help
 ```
 Otherwise, **BASSG** can be accessed with python directly:
 ```text
-$ py -m bassg --help
+$ python -m bassg --help
 ```
 
 # Usage
